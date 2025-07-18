@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Car Price Predictor</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <div class="container">
+    <h1>Car Price Predictor</h1>
+
+    <form method="post" action="/predict">
+      <label>Company</label>
+      <select id="company-select" name="company" required>
+        <option value="">-- Select Company --</option>
+        {% for comp in companies %}
+          <option value="{{ comp }}">{{ comp }}</option>
+        {% endfor %}
+      </select>
+
+      <label>Car Model</label>
+      <select id="model-select" name="name" required disabled>
+        <option value="">-- Select Model --</option>
+      </select>
+
+      <label>Fuel Type</label>
+      <select id="fuel-select" name="fuel_type" required disabled>
+        <option value="">-- Select Fuel --</option>
+      </select>
+
+      <label>Year</label>
+      <select name="year" required>
+        <option value="">-- Select Year --</option>
+        {% for y in range(2000, 2024) %}
+          <option value="{{ y }}">{{ y }}</option>
+        {% endfor %}
+      </select>
+
+      <label>Kms Driven</label>
+      <input type="number" name="kms_driven" min="0" required>
+
+      <button type="submit">Predict Price</button>
+    </form>
+
+    {% if prediction %}
+      <div class="result">
+        <h2>Predicted Price: ₹{{ prediction }}</h2>
+      </div>
+    {% endif %}
+  </div>
+
+  <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
